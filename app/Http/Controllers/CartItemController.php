@@ -30,5 +30,9 @@ class CartItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $form = $request->all();
+        DB::table('cart_items')->where('id', $id)
+                               ->update(['quantity' => $form['quantity'],'updated_at' => now()]);
+        return response()->json(true);
     }
 }
