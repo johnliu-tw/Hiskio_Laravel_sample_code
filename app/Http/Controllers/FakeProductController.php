@@ -58,7 +58,11 @@ class FakeProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = $this->getData();
+        $data = $data->filter(function ($product) use ($id) {
+            return $product['id'] != $id;
+        });
+        return response($data->values());
     }
 
     public function getData()
