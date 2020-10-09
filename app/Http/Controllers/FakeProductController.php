@@ -18,16 +18,6 @@ class FakeProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +25,11 @@ class FakeProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->getData();
+        $newData = $request->all();
+        array_push($data, $newData);
+
+        return response($data);
     }
 
     /**
