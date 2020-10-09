@@ -9,11 +9,21 @@ class CartItemController extends Controller
 {
     public function store(Request $request)
     {
-        $form = $request->all();
+        try {
+            $validatedData = $request->validate([
+            'cart_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer|between:1,10',
+        ]);
+        } catch (\Exception $exception) {
+            if (get_class($exception) == 'Illuminate\Validation\ValidationException') {
+                return response('false', 400);
+            };
+        }
         DB::table('cart_items')->insert(
-            ['cart_id' => $form['cart_id'],
-             'product_id' => $form['product_id'],
-             'quantity' => $form['quantity'],
+            ['cart_id' => $validatedData['cart_id'],
+             'product_id' => $validatedData['product_id'],
+             'quantity' => $validatedData['quantity'],
              'created_at' => now(),
              'updated_at' => now()]
         );
