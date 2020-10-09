@@ -27,32 +27,12 @@ class FakeProductController extends Controller
     {
         $data = $this->getData();
         $newData = $request->all();
-        array_push($data, $newData);
+        $data = $data->push($newData);
 
         return response($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -63,7 +43,11 @@ class FakeProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $this->getData();
+        $form = $request->all();
+        $selectedData = $data->where('id', $id)->first();
+        $selectedData = $selectedData->merge($form);
+        return response($selectedData);
     }
 
     /**
@@ -79,17 +63,19 @@ class FakeProductController extends Controller
 
     public function getData()
     {
-        return [
-            [
+        return collect([
+            collect([
+                'id' => 0,
                 'title' => '測試商品一',
                 'Content' => '這是很棒的商品',
                 'price' => 100,
-            ],
-            [
+            ]),
+            collect([
+                'id' => 1,
                 'title' => '測試商品二',
                 'Content' => '這是有點棒的商品',
                 'price' => 50,
-            ]
-        ];
+            ])
+        ]);
     }
 }
