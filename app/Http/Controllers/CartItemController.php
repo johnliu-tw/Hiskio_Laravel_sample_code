@@ -35,4 +35,17 @@ class CartItemController extends Controller
                                ->update(['quantity' => $form['quantity'],'updated_at' => now()]);
         return response()->json(true);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        DB::table('cart_items')->where('id', $id)
+                               ->delete();
+        return response()->json(true);
+    }
 }
