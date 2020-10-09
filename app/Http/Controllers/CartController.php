@@ -27,15 +27,6 @@ class CartController extends Controller
         return response($cart);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,7 +36,15 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $request->all();
+        DB::table('cart_items')->insert(
+            ['cart_id' => $form['cart_id'],
+             'product_id' => $form['product_id'],
+             'quantity' => $form['quantity'],
+             'created_at' => now(),
+             'updated_at' => now()]
+        );
+        return response()->json(true);
     }
 
     /**
