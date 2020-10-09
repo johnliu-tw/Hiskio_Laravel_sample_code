@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 Route::resource('fakeProducts', 'FakeProductController');
 Route::resource('products', 'ProductController');
+Route::resource('carts', 'CartController');
