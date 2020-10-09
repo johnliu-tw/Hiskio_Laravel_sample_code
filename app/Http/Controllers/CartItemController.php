@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UpdateCartItem;
 
 class CartItemController extends Controller
 {
@@ -38,11 +39,12 @@ class CartItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCartItem $request, $id)
     {
-        $form = $request->all();
+        $validatedData = $request->validated();
+
         DB::table('cart_items')->where('id', $id)
-                               ->update(['quantity' => $form['quantity'],'updated_at' => now()]);
+                               ->update(['quantity' => $validatedData['quantity'],'updated_at' => now()]);
         return response()->json(true);
     }
 
