@@ -11,7 +11,8 @@ class CartItem extends Model
     use HasFactory;
 
 
-    protected $fillable = ['quantity'];
+    protected $fillable = ['product_id','quantity'];
+    // protected $guard = ['created_at'];
     protected $hidden = ['updated_at'];
     protected $appends = ['current_price'];
 
