@@ -21,3 +21,5 @@ Route::resource('fakeProducts', 'FakeProductController');
 Route::resource('products', 'ProductController');
 Route::get('carts', 'CartController@index');
 Route::resource('cartItems', 'CartItemController');
+
+Route::post('signup', 'AuthController@signup');
