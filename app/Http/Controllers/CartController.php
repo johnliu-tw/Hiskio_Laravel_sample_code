@@ -21,4 +21,16 @@ class CartController extends Controller
         
         return response($cart);
     }
+
+    public function checkout()
+    {
+        $user = auth()->user();
+        $cart = $user->carts()->where('checkouted', false)->with('cartItems')->first();
+        if ($cart) {
+            $result = $cart->checkout();
+            return response($result);
+        } else {
+            return response('empty cart', 400);
+        }
+    }
 }

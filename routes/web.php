@@ -32,6 +32,7 @@ Route::group(
         Route::get('user', 'AuthController@user');
 
         Route::get('carts', 'CartController@index');
+        Route::post('carts/checkout', 'CartController@checkout');
         Route::resource('cartItems', 'CartItemController');
     }
 );
