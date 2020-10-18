@@ -38,3 +38,5 @@ Route::group(
         Route::resource('cartItems', 'CartItemController');
     }
 );
+
+Route::resource('admin/orders', 'Admin\OrderController');
