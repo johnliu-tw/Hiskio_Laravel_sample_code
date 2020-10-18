@@ -20,6 +20,7 @@ Route::get('/contactUs', 'WebController@contactUs');
 
 Route::resource('fakeProducts', 'FakeProductController');
 Route::resource('products', 'ProductController');
+Route::post('products/checkProduct', 'ProductController@checkProduct');
 
 Route::post('signup', 'AuthController@signup');
 Route::post('login', 'AuthController@login');
