@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <style>
   body{
     font-size: 16px;
@@ -7,10 +9,6 @@
     background-color: yellowgreen;
   }
 </style>
-<div>
-  <a href="/">商品列表</a>
-  <a href="/contactUs">聯絡我們</a>
-</div>
 <h2 style="margin-top: 40px;">商品列表</h2>
 <img src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" style="width: 300px;">
 <table>
@@ -55,3 +53,4 @@
   })
 
 </script>
+@endsection
