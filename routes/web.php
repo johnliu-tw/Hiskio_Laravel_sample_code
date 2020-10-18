@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WebController@index');
+Route::get('/contactUs', 'WebController@contactUs');
+
+
 
 Route::resource('fakeProducts', 'FakeProductController');
 Route::resource('products', 'ProductController');
