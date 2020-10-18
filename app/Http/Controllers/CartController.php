@@ -28,7 +28,7 @@ class CartController extends Controller
         $cart = $user->carts()->where('checkouted', false)->with('cartItems')->first();
         if ($cart) {
             $result = $cart->checkout();
-            return response($result);
+            return response(['result' => $result]);
         } else {
             return response('empty cart', 400);
         }

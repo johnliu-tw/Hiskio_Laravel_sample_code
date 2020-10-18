@@ -35,10 +35,16 @@ class Cart extends Model
         }
 
         foreach ($this->cartItems as $cartItem) {
+            $product = $cartItem->product;
+            if ($product->quantity == 0) {
+                return $product->title.' 數量不足';
+            }
             $order->orderItems()->create([
-                'product_id' => $cartItem->product_id,
+                'product_id' => $product->id,
                 'price' => $cartItem->product->price*$this->rate
             ]);
+
+            $product->update(['quantity' => $product->quantity - 1]);
         }
         $this->update(['checkouted' => true]);
         $order->orderItems;
