@@ -10,10 +10,31 @@
       <div class="modal-body">
         <ul>
           @foreach ($notifications as $notification)
-              <li>{{ $notification->data['msg'] }}</li>
+              <li class="read_notification" data-id="{{ $notification->id }}">{{ $notification->data['msg'] }} 
+                <span class="read">
+                  @if ($notification->read_at)
+                      (已讀)
+                  @endif
+                </span>
+              </li>
           @endforeach
         </ul>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $('.read_notification').click(function(){
+    var $this = $(this);
+    $.ajax({
+      method: "POST",
+      url: "/readNotification",
+      data: { id: $this.data('id')}
+    })
+    .done(function( msg ) {
+      if(msg.result){
+        $this.find('.read').text('(已讀)')
+      }
+    });
+  })
+</script>

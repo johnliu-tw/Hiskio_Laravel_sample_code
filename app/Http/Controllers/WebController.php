@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Notifications\DatabaseNotification;
 
 class WebController extends Controller
 {
@@ -30,5 +31,13 @@ class WebController extends Controller
     public function contactUs()
     {
         return view('webs.contact_us');
+    }
+
+    public function readNotification(Request $request)
+    {
+        $id = $request->all()['id'];
+        DatabaseNotification::find($id)->markAsRead();
+
+        return response(['result' => true]);
     }
 }
