@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\User;
 
 class WebController extends Controller
 {
@@ -13,10 +14,12 @@ class WebController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = Product::all();
-        return view('webs.index', ['products' => $products]);
+        $user = auth()->user() ? auth()->user() : User::find(1);
+        $notifications = $user->notifications;
+        return view('webs.index', ['products' => $products, 'notifications' => $notifications]);
     }
 
     /**
