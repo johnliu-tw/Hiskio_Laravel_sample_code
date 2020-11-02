@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Jobs\UpdateProductPrice;
 use App\Models\Product;
+use Illuminate\Support\Facades\Redis;
 
 class ToolController extends Controller
 {
@@ -14,5 +15,13 @@ class ToolController extends Controller
         foreach ($products as $product) {
             UpdateProductPrice::dispatch($product);
         }
+    }
+
+    public function createProductRedis()
+    {
+        Redis::set(
+            'products',
+            json_encode(Product::all())
+        );
     }
 }
