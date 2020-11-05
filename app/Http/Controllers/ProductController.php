@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
 use Illuminate\Support\Facades\Redis;
+use App\Models\Product;
+use App\Http\Services\ShortUrlService;
 
 class ProductController extends Controller
 {
@@ -25,5 +26,12 @@ class ProductController extends Controller
         } else {
             return response(false);
         }
+    }
+
+    public function sharedUrl($id)
+    {
+        $service = new ShortUrlService();
+        $url = $service->makeSortUrl("http://localhost:3000/products/$id");
+        return response(['url' => $url]);
     }
 }

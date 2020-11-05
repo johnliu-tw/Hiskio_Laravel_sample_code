@@ -22,6 +22,7 @@ Route::post('/readNotification', 'WebController@readNotification');
 Route::resource('fakeProducts', 'FakeProductController');
 Route::resource('products', 'ProductController');
 Route::post('products/checkProduct', 'ProductController@checkProduct');
+Route::get('products/{id}/sharedUrl', 'ProductController@sharedUrl');
 
 Route::post('signup', 'AuthController@signup');
 Route::post('login', 'AuthController@login');
