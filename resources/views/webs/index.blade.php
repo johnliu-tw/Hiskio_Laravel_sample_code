@@ -29,6 +29,7 @@
         <td>
           <a href="www.google.com">商品細節</a>
           <input class='check_product' type='button' value='確認商品數量' data-id="{{ $product->id }}">
+          <input class='check_shared_url' type='button' value='分享商品' data-id="{{ $product->id }}">
         </td>
       </tr>
     @endforeach
@@ -50,6 +51,14 @@
       }
     });
   })
-
+  $('.check_shared_url').click(function(){
+    $.ajax({
+      method: "Get",
+      url: `/products/${$(this).data('id')}/sharedUrl`,
+    })
+    .done(function( msg ) {
+      alert('請分享此縮網址:' + msg.url)
+    });
+  })
 </script>
 @endsection
