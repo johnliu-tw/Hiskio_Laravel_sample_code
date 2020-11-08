@@ -1,4 +1,6 @@
-<h2 >後台 - 訂單列表</h2>
+@extends('layouts.admin_app')
+@section('content')
+<h2 >訂單管理</h2>
 <span>訂單總數: {{ $orderCount }} </span>
 <table>
   <thead>
@@ -31,3 +33,4 @@
       <a href="/admin/orders?page={{ $i }}">第 {{ $i }} 頁</a> &nbsp;
   @endfor
 </div>
+@endsection
