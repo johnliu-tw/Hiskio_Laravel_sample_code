@@ -44,5 +44,6 @@ Route::group(
 Route::resource('admin/orders', 'Admin\OrderController');
 Route::resource('admin/products', 'Admin\ProductController');
 Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
+Route::post('admin/products/uploadImage', 'Admin\ProductController@uploadImage');
 Route::post('admin/tools/updateProductPrice', 'Admin\ToolController@updateProductPrice');
 Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProductRedis');

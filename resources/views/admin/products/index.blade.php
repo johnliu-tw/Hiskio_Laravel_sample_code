@@ -23,7 +23,9 @@
         <td>{{ $product->price}}</td>
         <td>{{ $product->quantity}}</td>
         <td></td>
-        <td></td>
+        <td>
+          <input class="upload_image" data-id="{{$product->id}}" type="button" value="通知">
+        </td>
       </tr>
     @endforeach
   </tbody>
@@ -33,4 +35,32 @@
       <a href="/admin/products?page={{ $i }}">第 {{ $i }} 頁</a> &nbsp;
   @endfor
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="upload_image" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>上傳圖片</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/products/uploadImage" method="post" enctype=multipart/form-data>
+          <input type="hidden" id="product_id" name="product_id">
+          <input type="file" id="product_image" name="product_image">
+          <input type="submit" value="送出">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('.upload_image').click(function(){
+    $('#product_id').val($(this).data('id'))
+    $('#upload_image').modal()
+  })
+</script>
 @endsection
