@@ -35,17 +35,15 @@ class ProductController extends Controller
         $file = $request->file('product_image');
         $productId = $request->input('product_id', null);
         if (is_null($productId)) {
-            return response(['msg' => '參數錯誤'], 400);
+            return redirect()->back()->withErrors(['msg' => '參數錯誤']);
         }
         $product = Product::find($productId);
-        $path = $file->store('images');
-        $image = Image::create([
-            'attachable_type' => $product->getTable(),
-            'attachable_id'   => $product->id,
+        $path = $file->store('public/images');
+        $product->images()->create([
             'filename'        => $file->getClientOriginalName(),
             'path'            => $path,
         ]);
 
-        return response(['msg' => 'success']);
+        return redirect()->back();
     }
 }

@@ -2,6 +2,20 @@
 @section('content')
 <h2 >產品列表</h2>
 <span>產品總數: {{ $productCount }} </span>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if (isset($success))
+    <div class="alert alert-success">
+        {{ $success }}
+    </div>
+@endif
 <table>
   <thead>
     <tr>
@@ -22,7 +36,11 @@
         <td>{{ $product->content}}</td>
         <td>{{ $product->price}}</td>
         <td>{{ $product->quantity}}</td>
-        <td></td>
+        <td>
+          @if($product->image_url)
+            <a href="{{ $product->image_url}}">圖片連結</a>
+          @endif
+        </td>
         <td>
           <input class="upload_image" data-id="{{$product->id}}" type="button" value="通知">
         </td>
