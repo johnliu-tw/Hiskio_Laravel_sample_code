@@ -19,4 +19,8 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'attachable');
+    }
 }

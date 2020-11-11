@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Image;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
@@ -27,5 +28,24 @@ class ProductController extends Controller
         return view('admin.products.index', ['products' => $products,
                                            'productCount' => $productCount,
                                            'productPages' => $productPages]);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $file = $request->file('product_image');
+        $productId = $request->input('product_id', null);
+        if (is_null($productId)) {
+            return response(['msg' => '參數錯誤'], 400);
+        }
+        $product = Product::find($productId);
+        $path = $file->store('images');
+        $image = Image::create([
+            'attachable_type' => $product->getTable(),
+            'attachable_id'   => $product->id,
+            'filename'        => $file->getClientOriginalName(),
+            'path'            => $path,
+        ]);
+
+        return response(['msg' => 'success']);
     }
 }
