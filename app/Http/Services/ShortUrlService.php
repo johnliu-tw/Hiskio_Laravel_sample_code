@@ -31,7 +31,7 @@ class ShortUrlService
                 $postData
             );
             $contents = $response->getBody()->getContents();
-            Log::info('responseData', ['data' => $contents]);
+            Log::channel('url_shorten')->info('responseData', ['data' => $contents]);
             $contents = json_decode($contents);
             $url = $contents->data->picseeUrl;
         } catch (\Exception $e) {
