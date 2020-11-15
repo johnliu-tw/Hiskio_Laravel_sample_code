@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Arr;
+use App\Models\LogError;
 
 class Handler extends ExceptionHandler
 {
@@ -33,7 +35,27 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        //
+        $this->reportable(function (\Exception $exception) {
+            $user = auth()->user();
+            LogError::create([
+                'user_id'    => $user ? $user->id : 0,
+                'message'   => $exception->getMessage(),
+                'exception' => get_class($exception),
+                'line'      => $exception->getLine(),
+                'trace'     => collect($exception->getTrace())->map(function ($trace) {
+                    return Arr::except($trace, ['args']);
+                })->all(),
+                'method'      => request()->getMethod(),
+                'params'      => request()->all(),
+                'uri'         => request()->getPathInfo(),
+                'user_agent'  => request()->userAgent(),
+                'header'      => request()->headers->all()
+            ]);
+        });
+
+        $this->renderable(function (\Exception $e) {
+            return response()->view('error', [], 500);
+        });
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)
