@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (\Exception $e) {
-            return response()->view('error', [], 500);
+            // return response()->view('error', [], 500);
         });
     }
 

@@ -2,6 +2,9 @@
 @section('content')
 <h2 >訂單管理</h2>
 <span>訂單總數: {{ $orderCount }} </span>
+<div>
+  <a href="/admin/orders/export">匯出訂單Excel</a>
+</div>
 <table>
   <thead>
     <tr>
