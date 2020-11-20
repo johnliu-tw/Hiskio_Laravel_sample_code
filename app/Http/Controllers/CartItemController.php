@@ -7,22 +7,25 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateCartItem;
 use App\Models\Cart;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Validator;
 
 class CartItemController extends Controller
 {
     public function store(Request $request)
     {
-        try {
-            $validatedData = $request->validate([
-            'cart_id' => 'required|integer',
-            'product_id' => 'required|integer',
-            'quantity' => 'required|integer|between:1,10',
-        ]);
-        } catch (\Exception $exception) {
-            if (get_class($exception) == 'Illuminate\Validation\ValidationException') {
-                return response('false', 400);
-            };
+        $messages = [
+            'required' => ':attribute 是必要的',
+            'between' => ':attribute 的輸入 :input 不在 :min 與 :max 之間',
+        ];
+        $validator = Validator::make($request->all(), [
+                'cart_id' => 'required|integer',
+                'product_id' => 'required|integer',
+                'quantity' => 'required|integer|between:1,10',
+        ], $messages);
+        if ($validator->fails()) {
+            return response($validator->errors(), 400);
         }
+        $validatedData = $validator->validate();
         $cart = Cart::find($validatedData['cart_id']);
         $result = $cart->cartItems()->create(
             ['product_id' => $validatedData['product_id'],
