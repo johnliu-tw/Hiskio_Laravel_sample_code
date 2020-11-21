@@ -4,6 +4,7 @@
 <span>訂單總數: {{ $orderCount }} </span>
 <div>
   <a href="/admin/orders/export">匯出訂單Excel</a>
+  <a href="/admin/orders/exportByShipped">匯出分類訂單Excel</a>
 </div>
 <table>
   <thead>

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Http\Controllers\Controller;
 use App\Notifications\OrderDeliver;
 use App\Exports\OrdersExport;
+use App\Exports\OrdersMultipleExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
@@ -49,5 +50,10 @@ class OrderController extends Controller
     public function export()
     {
         return Excel::download(new OrdersExport, 'orders.xlsx');
+    }
+
+    public function exportByShipped()
+    {
+        return Excel::download(new OrdersMultipleExport, 'orders.xlsx');
     }
 }
