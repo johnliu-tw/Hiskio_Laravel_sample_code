@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Image;
+use App\Imports\ProductsImport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -44,6 +45,14 @@ class ProductController extends Controller
             'path'            => $path,
         ]);
 
+        return redirect()->back();
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('excel');
+        Excel::import(new ProductsImport, $file);
+        
         return redirect()->back();
     }
 }

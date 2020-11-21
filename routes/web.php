@@ -46,5 +46,6 @@ Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
 Route::get('admin/orders/export', 'Admin\OrderController@export');
 Route::resource('admin/orders', 'Admin\OrderController');
 Route::post('admin/products/uploadImage', 'Admin\ProductController@uploadImage');
+Route::post('admin/products/import', 'Admin\ProductController@import');
 Route::post('admin/tools/updateProductPrice', 'Admin\ToolController@updateProductPrice');
 Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProductRedis');

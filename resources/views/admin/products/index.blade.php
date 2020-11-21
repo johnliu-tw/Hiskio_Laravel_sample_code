@@ -2,6 +2,9 @@
 @section('content')
 <h2 >產品列表</h2>
 <span>產品總數: {{ $productCount }} </span>
+<div>
+  <input class="import" type="button" value="匯入 Excel"">
+</div>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -75,10 +78,33 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="import" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>上傳Excel</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/products/import" method="post" enctype=multipart/form-data>
+          <input type="file" id="excel" name="excel">
+          <input type="submit" value="送出">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $('.upload_image').click(function(){
     $('#product_id').val($(this).data('id'))
     $('#upload_image').modal()
+  })
+  $('.import').click(function(){
+    $('#import').modal()
   })
 </script>
 @endsection
