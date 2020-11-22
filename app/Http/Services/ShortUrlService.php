@@ -6,14 +6,14 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
-class ShortUrlService
+class ShortUrlService implements ShortUrlInterfaceService
 {
     public function __construct()
     {
         $this->client = new Client();
     }
 
-    protected $version = 2.5;
+    public $version = 2.5;
 
     public function makeSortUrl($url)
     {

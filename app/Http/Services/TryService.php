@@ -3,10 +3,14 @@ namespace App\Http\Services;
 
 class TryService
 {
+    private $shortUrlService;
+    public function __construct(ShortUrlInterfaceService $shortUrlService)
+    {
+        $this->shortUrlService = $shortUrlService;
+    }
     public function callTry()
     {
-        $service = app()->make('ShortUrlService');
-        dd($service->version);
+        dd($this->shortUrlService->version);
     }
 
     public $name = 'john';
