@@ -13,6 +13,8 @@ class ShortUrlService
         $this->client = new Client();
     }
 
+    protected $version = 2.5;
+
     public function makeSortUrl($url)
     {
         try {
