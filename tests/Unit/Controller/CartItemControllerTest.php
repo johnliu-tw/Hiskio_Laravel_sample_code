@@ -31,10 +31,7 @@ class CartItemControllerTest extends TestCase
     public function testStore()
     {
         $cart = $this->fakeUser->carts()->create();
-        $product = Product::create(['title' => 'test product',
-                                    'content' => 'cool',
-                                    'price' => 10,
-                                    'quantity' => 20]);
+        $product = Product::factory()->make();
         $res = $this->call(
             'POST',
             'cart-items',
@@ -53,10 +50,7 @@ class CartItemControllerTest extends TestCase
     public function testUpdate()
     {
         $cart = $this->fakeUser->carts()->create();
-        $product = Product::create(['title' => 'test product',
-                                    'content' => 'cool',
-                                    'price' => 10,
-                                    'quantity' => 20]);
+        $product = Product::factory()->make();
         $cartItem = $cart->cartItems()->create(['product_id' => $product->id, 'quantity' => 10]);
 
         $res = $this->call(
@@ -72,10 +66,7 @@ class CartItemControllerTest extends TestCase
     public function testDestroy()
     {
         $cart = $this->fakeUser->carts()->create();
-        $product = Product::create(['title' => 'test product',
-                                    'content' => 'cool',
-                                    'price' => 10,
-                                    'quantity' => 20]);
+        $product = Product::factory()->make();
         $cartItem = $cart->cartItems()->create(['product_id' => $product->id, 'quantity' => 10]);
 
         $res = $this->call(
