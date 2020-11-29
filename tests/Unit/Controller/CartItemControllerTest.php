@@ -5,6 +5,7 @@ namespace Tests\Feature\Controller;
 use App\Models\CartItem;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Cart;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
@@ -30,7 +31,9 @@ class CartItemControllerTest extends TestCase
      */
     public function testStore()
     {
-        $cart = $this->fakeUser->carts()->create();
+        $cart = Cart::factory()->create(
+            ['user_id' => $this->fakeUser->id]
+        );
         $product = Product::factory()->make();
         $res = $this->call(
             'POST',
@@ -49,7 +52,9 @@ class CartItemControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $cart = $this->fakeUser->carts()->create();
+        $cart = Cart::factory()->make(
+            ['user_id' => $this->fakeUser->id]
+        );
         $product = Product::factory()->make();
         $cartItem = $cart->cartItems()->create(['product_id' => $product->id, 'quantity' => 10]);
 
@@ -65,7 +70,9 @@ class CartItemControllerTest extends TestCase
     }
     public function testDestroy()
     {
-        $cart = $this->fakeUser->carts()->create();
+        $cart = Cart::factory()->make(
+            ['user_id' => $this->fakeUser->id]
+        );
         $product = Product::factory()->make();
         $cartItem = $cart->cartItems()->create(['product_id' => $product->id, 'quantity' => 10]);
 
