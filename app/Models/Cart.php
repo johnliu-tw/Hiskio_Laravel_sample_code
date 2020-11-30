@@ -25,6 +25,13 @@ class Cart extends Model
     }
     public function checkout()
     {
+        foreach ($this->cartItems as $cartItem) {
+            $product = $cartItem->product;
+            if ($product->quantity < $cartItem->quantity) {
+                return $product->title.' 數量不足';
+            }
+        }
+
         $order = $this->order()->create([
             'user_id' => $this->user_id,
             'is_shipped' => false
@@ -35,16 +42,12 @@ class Cart extends Model
         }
 
         foreach ($this->cartItems as $cartItem) {
-            $product = $cartItem->product;
-            if ($product->quantity == 0) {
-                return $product->title.' 數量不足';
-            }
             $order->orderItems()->create([
-                'product_id' => $product->id,
+                'product_id' => $cartItem->product_id,
                 'price' => $cartItem->product->price*$this->rate
             ]);
 
-            $product->update(['quantity' => $product->quantity - 1]);
+            $product->update(['quantity' => $product->quantity - $cartItem->quantity]);
         }
         $this->update(['checkouted' => true]);
         $order->orderItems;
