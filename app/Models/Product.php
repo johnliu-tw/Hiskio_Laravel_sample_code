@@ -35,4 +35,12 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'attachable');
     }
+    public function checkQuantity($quantity)
+    {
+        if ($this->quantity < $quantity) {
+            return false;
+        }
+
+        return true;
+    }
 }
