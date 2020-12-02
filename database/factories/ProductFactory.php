@@ -30,4 +30,12 @@ class ProductFactory extends Factory
             'quantity' => $this->faker->numberBetween(10, 100)
         ];
     }
+    public function less()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'quantity' => 1
+            ];
+        });
+    }
 }

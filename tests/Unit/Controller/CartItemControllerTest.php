@@ -34,13 +34,21 @@ class CartItemControllerTest extends TestCase
         $cart = Cart::factory()->create(
             ['user_id' => $this->fakeUser->id]
         );
-        $product = Product::factory()->make();
+        $product = Product::factory()->create();
         $res = $this->call(
             'POST',
             'cart-items',
             ['cart_id' => $cart->id, 'product_id' => $product->id, 'quantity' => 10],
         );
         $res->assertOk();
+
+        $product = Product::factory()->less()->create();
+        $res = $this->call(
+            'POST',
+            'cart-items',
+            ['cart_id' => $cart->id, 'product_id' => $product->id, 'quantity' => 10],
+        );
+        $this->assertEquals($product->title.'數量不足', $res->getContent());
 
         $res = $this->call(
             'POST',
@@ -52,11 +60,7 @@ class CartItemControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $cart = Cart::factory()->make(
-            ['user_id' => $this->fakeUser->id]
-        );
-        $product = Product::factory()->make();
-        $cartItem = $cart->cartItems()->create(['product_id' => $product->id, 'quantity' => 10]);
+        $cartItem = CartItem::factory()->create();
 
         $res = $this->call(
             'PUT',
