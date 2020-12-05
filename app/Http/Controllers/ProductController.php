@@ -10,6 +10,10 @@ use App\Http\Services\ShortUrlService;
 
 class ProductController extends Controller
 {
+    public function __construct(ShortUrlService $shortUrlService)
+    {
+        $this->shortUrlService = $shortUrlService;
+    }
     public function index()
     {
         // $products = DB::table('products')->get();
@@ -30,8 +34,9 @@ class ProductController extends Controller
 
     public function sharedUrl($id)
     {
-        $service = new ShortUrlService();
-        $url = $service->makeSortUrl("http://localhost:3000/products/$id");
+        // 假設有查看特定使用者分享次數的邏輯
+        // eg: auth()->user()->checkShareCount...
+        $url = $this->shortUrlService->makeSortUrl("http://localhost:3000/products/$id");
         return response(['url' => $url]);
     }
 }
