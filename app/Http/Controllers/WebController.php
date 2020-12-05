@@ -10,6 +10,12 @@ use Illuminate\Notifications\DatabaseNotification;
 
 class WebController extends Controller
 {
+    public $notifications = [];
+    public function __construct()
+    {
+        $user = auth()->user() ? auth()->user() : User::find(1);
+        $this->notifications = $user->notifications;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +24,7 @@ class WebController extends Controller
     public function index(Request $request)
     {
         $products = Product::all();
-        $user = auth()->user() ? auth()->user() : User::find(1);
-        $notifications = $user->notifications;
-        return view('webs.index', ['products' => $products, 'notifications' => $notifications]);
+        return view('webs.index', ['products' => $products, 'notifications' => $this->notifications]);
     }
 
     /**
@@ -30,7 +34,7 @@ class WebController extends Controller
      */
     public function contactUs()
     {
-        return view('webs.contact_us');
+        return view('webs.contact_us', ['notifications' => $this->notifications]);
     }
 
     public function readNotification(Request $request)

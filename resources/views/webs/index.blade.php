@@ -9,9 +9,13 @@
     background-color: yellowgreen;
   }
 </style>
-<h2 style="margin-top: 40px;">商品列表</h2>
-<img src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" style="width: 300px;">
-<table>
+<div class="row">
+  <h2 class="col-4" style="margin-top: 40px;">商品列表</h2>
+  <div class="col-8">
+    <img  src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" style="width: 300px;">
+  </div>
+</div>
+<table class="table" style="margin-top:30px;">
   <thead>
     <tr>
       <td>標題</td>
@@ -27,9 +31,9 @@
         <td>{{ $product->content }}</td>
         <td style="{{ $product->price < 600 ? 'color:red; font-size:22px' : ''  }}" >{{ $product->price }}</td>
         <td>
-          <a href="www.google.com">商品細節</a>
-          <input class='check_product' type='button' value='確認商品數量' data-id="{{ $product->id }}">
-          <input class='check_shared_url' type='button' value='分享商品' data-id="{{ $product->id }}">
+          <a href="www.google.com"><i class="fa fa-eye fa-lg" aria-hidden="true"></i> 商品細節</a>
+          <input class='check_product btn btn-success' type='button' value='確認商品數量' data-id="{{ $product->id }}">
+          <input class='check_shared_url  btn btn-warning' type='button' value='分享商品' data-id="{{ $product->id }}">
         </td>
       </tr>
     @endforeach
