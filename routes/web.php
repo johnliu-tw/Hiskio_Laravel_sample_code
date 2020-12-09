@@ -45,6 +45,7 @@ Route::resource('admin/products', 'Admin\ProductController');
 Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
 Route::get('admin/orders/export', 'Admin\OrderController@export');
 Route::get('admin/orders/exportByShipped', 'Admin\OrderController@exportByShipped');
+Route::get('admin/orders/datatables', 'Admin\OrderController@datatables')->name('orders.datatables');
 Route::resource('admin/orders', 'Admin\OrderController');
 Route::post('admin/products/uploadImage', 'Admin\ProductController@uploadImage');
 Route::post('admin/products/import', 'Admin\ProductController@import');

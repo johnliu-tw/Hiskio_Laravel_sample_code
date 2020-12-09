@@ -9,6 +9,7 @@ use App\Notifications\OrderDeliver;
 use App\Exports\OrdersExport;
 use App\Exports\OrdersMultipleExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\DataTables\OrdersDataTable;
 
 class OrderController extends Controller
 {
@@ -32,6 +33,11 @@ class OrderController extends Controller
         return view('admin.orders.index', ['orders' => $orders,
                                            'orderCount' => $orderCount,
                                            'orderPages' => $orderPages]);
+    }
+
+    public function datatables(OrdersDataTable $ordersDataTable)
+    {
+        return $ordersDataTable->render('admin.orders.datatables');
     }
 
     public function delivery(Request $request, $id)
