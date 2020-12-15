@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Cart extends Model
 {
@@ -25,32 +27,35 @@ class Cart extends Model
     }
     public function checkout()
     {
-        foreach ($this->cartItems as $cartItem) {
-            $product = $cartItem->product;
-            if ($product->quantity < $cartItem->quantity) {
-                return $product->title.' 數量不足';
+        $result = DB::transaction(function () {
+            foreach ($this->cartItems as $cartItem) {
+                $product = $cartItem->product;
+                if ($product->quantity < $cartItem->quantity) {
+                    return $product->title.' 數量不足';
+                }
             }
-        }
 
-        $order = $this->order()->create([
-            'user_id' => $this->user_id,
-            'is_shipped' => false
-        ]);
+            $order = $this->order()->create([
+                'user_id' => $this->user_id,
+                'is_shipped' => false
+            ]);
         
-        if ($this->user->level == 2) {
-            $this->rate = 0.8;
-        }
+            if ($this->user->level == 2) {
+                $this->rate = 0.8;
+            }
 
-        foreach ($this->cartItems as $cartItem) {
-            $order->orderItems()->create([
+            foreach ($this->cartItems as $cartItem) {
+                $order->orderItems()->create([
                 'product_id' => $cartItem->product_id,
                 'price' => $cartItem->product->price*$this->rate
             ]);
+                $product->update(['quantity' => $product->quantity - $cartItem->quantity]);
+            }
+            $this->update(['checkouted' => true]);
+            $order->orderItems;
+            return $order;
+        });
 
-            $product->update(['quantity' => $product->quantity - $cartItem->quantity]);
-        }
-        $this->update(['checkouted' => true]);
-        $order->orderItems;
-        return $order;
+        return $result;
     }
 }
