@@ -35,16 +35,20 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (\Exception $exception) {
+        $this->reportable(function (\Throwable $exception) {
             $user = auth()->user();
             LogError::create([
                 'user_id'    => $user ? $user->id : 0,
                 'message'   => $exception->getMessage(),
                 'exception' => get_class($exception),
                 'line'      => $exception->getLine(),
-                'trace'     => collect($exception->getTrace())->map(function ($trace) {
-                    return Arr::except($trace, ['args']);
-                })->all(),
+                'trace'     => array_map(
+                    function ($trace) {
+                        unset($trace['args']);
+                        return $trace;
+                    },
+                    $exception->getTrace()
+                ),
                 'method'      => request()->getMethod(),
                 'params'      => request()->all(),
                 'uri'         => request()->getPathInfo(),
@@ -53,9 +57,9 @@ class Handler extends ExceptionHandler
             ]);
         });
 
-        $this->renderable(function (\Exception $e) {
-            // return response()->view('error', [], 500);
-        });
+        // $this->renderable(function (\Exception $e) {
+        //     return response()->view('error', [], 500);
+        // });
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)

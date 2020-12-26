@@ -13,7 +13,7 @@ class ToolController extends Controller
     {
         $products = Product::all();
         foreach ($products as $product) {
-            UpdateProductPrice::dispatch($product);
+            UpdateProductPrice::dispatch($product)->onQueue('tool');
         }
     }
 

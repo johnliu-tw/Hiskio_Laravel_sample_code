@@ -36,7 +36,7 @@ class ShortUrlService implements ShortUrlInterfaceService
             Log::channel('url_shorten')->info('responseData', ['data' => $contents]);
             $contents = json_decode($contents);
             $url = $contents->data->picseeUrl;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             report($e);
             return $url;
         }
