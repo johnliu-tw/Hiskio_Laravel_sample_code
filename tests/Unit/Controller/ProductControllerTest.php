@@ -6,6 +6,7 @@ use App\Models\Product;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\Services\ShortUrlService;
+use App\Http\Services\AuthService;
 
 class ProductControllerTest extends TestCase
 {
@@ -24,6 +25,12 @@ class ProductControllerTest extends TestCase
             $mock->shouldReceive('makeSortUrl')
                  ->with("http://localhost:3000/products/$id")
                  ->andReturn('fakeUrl');
+        });
+
+        // 可作切換
+        $this->mock(AuthService::class, function ($mock) use ($id) {
+            $mock->shouldReceive('fakeReturn')
+                 ->andReturn(123);
         });
 
         $res = $this->call(

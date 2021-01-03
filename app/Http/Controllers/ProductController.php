@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use App\Models\Product;
 use App\Http\Services\ShortUrlService;
+use App\Http\Services\AuthService;
 
 class ProductController extends Controller
 {
-    public function __construct(ShortUrlService $shortUrlService)
+    public function __construct(ShortUrlService $shortUrlService, AuthService $authService)
     {
         $this->shortUrlService = $shortUrlService;
+        $this->authService = $authService;
     }
     public function index()
     {
@@ -36,6 +38,7 @@ class ProductController extends Controller
     {
         // 假設有查看特定使用者分享次數的邏輯
         // eg: auth()->user()->checkShareCount...
+        $this->authService->fakeReturn();
         $url = $this->shortUrlService->makeSortUrl("http://localhost:3000/products/$id");
         return response(['url' => $url]);
     }
