@@ -31,7 +31,7 @@
         <td>{{ $product->content }}</td>
         <td style="{{ $product->price < 600 ? 'color:red; font-size:22px' : ''  }}" >{{ $product->price }}</td>
         <td>
-          <a href="www.google.com"><i class="fa fa-eye fa-lg" aria-hidden="true"></i> 商品細節</a>
+          <a href="www.google.com"><i class="fab fa-apple" style='color: red; font-size: 30px'></i> 商品細節</a>
           <input class='check_product btn btn-success' type='button' value='確認商品數量' data-id="{{ $product->id }}">
           <input class='check_shared_url  btn btn-warning' type='button' value='分享商品' data-id="{{ $product->id }}">
         </td>
