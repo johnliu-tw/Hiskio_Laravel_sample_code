@@ -39,6 +39,9 @@
     @endforeach
   </tbody>
 </table>
+<div id="app" v-cloak>
+  <example-component></example-component>
+</div>
 <script>
   $('.check_product').click(function(){
     $.ajax({
