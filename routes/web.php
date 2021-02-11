@@ -13,13 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::group(
+    [
+    'middleware' => 'check.dirty'
+],
+    function () {
+        Route::resource('fakeProducts', 'FakeProductController');
+    }
+);
+
+
 Route::get('/', 'WebController@index');
 Route::get('/contactUs', 'WebController@contactUs');
 Route::post('/readNotification', 'WebController@readNotification');
 
 
-
-Route::resource('fakeProducts', 'FakeProductController');
+// Route::resource('fakeProducts', 'FakeProductController');
 Route::resource('products', 'ProductController');
 Route::post('products/checkProduct', 'ProductController@checkProduct');
 Route::get('products/{id}/sharedUrl', 'ProductController@sharedUrl');
