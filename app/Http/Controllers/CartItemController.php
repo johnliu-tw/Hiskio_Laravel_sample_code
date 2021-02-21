@@ -67,9 +67,14 @@ class CartItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $item = CartItem::find($id)->delete();
+        $adminToken = $request->header('admin-token');
+        if ($adminToken && $adminToken == env('ADMIN_TOKEN')) {
+            CartItem::withTrashed()->find($id)->forceDelete();
+        } else {
+            CartItem::find($id)->delete();
+        }
         return response()->json(true);
     }
 }
