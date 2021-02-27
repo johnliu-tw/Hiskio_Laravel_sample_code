@@ -31,6 +31,10 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function favorited_users()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
     public function images()
     {
         return $this->morphMany(Image::class, 'attachable');
