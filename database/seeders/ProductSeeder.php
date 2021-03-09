@@ -15,8 +15,8 @@ class ProductSeeder extends Seeder
     public function run()
     {
         Product::upsert([
-            ['id' => 15, 'title' => '固定資料', 'content' => '固定內容', 'price' => 300, 'quantity' => 20],
-            ['id' => 16, 'title' => '固定資料2', 'content' => '固定內容2', 'price' => 500, 'quantity' => 20],
+            ['id' => 1, 'title' => '固定資料', 'content' => '固定內容', 'price' => 300, 'quantity' => 20],
+            ['id' => 2, 'title' => '固定資料2', 'content' => '固定內容2', 'price' => 500, 'quantity' => 20],
         ], ['id'], ['price', 'quantity']);
     }
 }

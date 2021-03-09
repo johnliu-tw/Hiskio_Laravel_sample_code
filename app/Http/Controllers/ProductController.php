@@ -38,7 +38,7 @@ class ProductController extends Controller
     {
         // 假設有查看特定使用者分享次數的邏輯
         // eg: auth()->user()->checkShareCount...
-        $this->authService->fakeReturn();
+        // $this->authService->fakeReturn(); ( 後面才上到，先註解 )
         $url = $this->shortUrlService->makeSortUrl("http://localhost:3000/products/$id");
         return response(['url' => $url]);
     }
