@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cart;
 use App\Http\Services\CartService;
+use App\Http\Repositories\CartRepository;
 
 class CartController extends Controller
 {
     protected $cartService;
-    public function __construct(CartService $cartService)
+    protected $cartRepository;
+    public function __construct(CartService $cartService, CartRepository $cartRepository)
     {
         $this->cartService = $cartService;
+        $this->cartRepository = $cartRepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +25,7 @@ class CartController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $cart = Cart::with('cartItems')->where('user_id', $user->id)->firstOrCreate(['user_id' => $user->id]);
+        $cart = $this->cartRepository->scopeBelongsUser($user)->firstOrCreate(['user_id' => $user->id]);
         
         return response($cart);
     }
@@ -30,7 +33,7 @@ class CartController extends Controller
     public function checkout()
     {
         $user = auth()->user();
-        $cart = $user->carts()->where('checkouted', false)->with('cartItems')->first();
+        $cart = $this->cartRepository->scopeChecked($user)->first();
         if ($cart) {
             $result = $this->cartService->checkout($cart);
             return response(['result' => $result]);
