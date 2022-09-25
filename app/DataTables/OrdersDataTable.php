@@ -19,6 +19,15 @@ class OrdersDataTable extends DataTable
     public function dataTable($query)
     {
         return DataTables::eloquent($query)
+                        ->editColumn('is_shipped', function ($model) {
+                            return $model->is_shipped ? '是' : '否';
+                        })
+                        ->editColumn('created_at', function ($model) {
+                            return $model->created_at->format('Y-m-d H:m:s');
+                        })
+                        ->editColumn('updated_at', function ($model) {
+                            return $model->updated_at->format('Y-m-d H:m:s');
+                        })
                         ->editColumn('action', function ($model) {
                             $html = "<a class='confirm-btn btn btn-success'  href='$model->id' >查看</a>";
 
@@ -62,7 +71,13 @@ class OrdersDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
+            new Column([
+                'title' => '編號',
+                'data' => 'id',
+                'attributes' => [
+                    'data-try' => 'test data',
+                ],
+            ]),
             new Column([
                 'title' => '是否運送',
                 'data' => 'is_shipped',
@@ -70,10 +85,27 @@ class OrdersDataTable extends DataTable
                     'data-try' => 'test data',
                 ],
             ]),
-            Column::make('is_shipped'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
-            Column::make('user_id'),
+            new Column([
+                'title' => '建立時間',
+                'data' => 'created_at',
+                'attributes' => [
+                    'data-try' => 'test data',
+                ],
+            ]),
+            new Column([
+                'title' => '更新時間',
+                'data' => 'updated_at',
+                'attributes' => [
+                    'data-try' => 'test data',
+                ],
+            ]),
+            new Column([
+                'title' => '購買者編號',
+                'data' => 'user_id',
+                'attributes' => [
+                    'data-try' => 'test data',
+                ],
+            ]),
             new Column([
                 'title' => '功能',
                 'data' => 'action',

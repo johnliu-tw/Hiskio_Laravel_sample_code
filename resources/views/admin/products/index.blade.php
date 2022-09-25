@@ -45,7 +45,7 @@
           @endif
         </td>
         <td>
-          <input class="upload_image btn-circle btn-primary" data-id="{{$product->id}}" type="button" value="通知">
+          <input class="upload_image btn-circle btn-primary" data-id="{{$product->id}}" type="button" value="上傳">
         </td>
       </tr>
     @endforeach

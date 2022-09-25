@@ -10,6 +10,9 @@ class Order extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $cast = [
+        'created_at' => 'datetime',
+    ];
 
     public function orderItems()
     {
